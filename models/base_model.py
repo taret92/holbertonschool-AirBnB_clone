@@ -4,6 +4,7 @@ Class Basemodel that define all common attributes
 """
 from uuid import uuid4
 from datetime import datetime
+from models import storage
 
 class BaseModel:
     """
@@ -18,11 +19,17 @@ class BaseModel:
         self.created_at= datetime.isoformat(datetime.now())
         self.updated_at= datetime.isoformat(datetime.now())
         if kwargs:
-            for j, c, in kwargs.items():
-                if j == "created_at" or j == "updated_at":
-                    c = datetime.strptime(c, "%Y-%m-%dT%H:%M:%S.%f")
-                if k != "__class__":
-                    setattr(self, j, c)
+            for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                if key != "__class__":
+                    setattr(self, key, value)
+        else:
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            storage.new(self)
+            storage.save()
+
 
 
     def __str__(self):
@@ -31,6 +38,7 @@ class BaseModel:
 
     def __save__(self):
         """uptade with the current time"""
+        storage.save()
         
         self.updated_at = datetime.isoformat(datetime.now())
 
