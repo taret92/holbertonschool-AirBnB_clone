@@ -2,7 +2,7 @@
 """defines a class user"""
 from models.base_model import BaseModel, Base
 
-    class user(BaseModel, Base):
+    class User(BaseModel, Base):
         """Defines user by various attributes"""
         email = ""
         password = ""
