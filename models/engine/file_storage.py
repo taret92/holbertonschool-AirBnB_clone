@@ -19,6 +19,6 @@ class FileStorange:
     
     def save(self):
         pass
-    
+        
     def reload(self):
         pass
