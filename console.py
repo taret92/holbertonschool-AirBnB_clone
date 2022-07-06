@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import cmd, sys, os
+from hashlib import new
 from logging import logMultiprocessing
 from re import template
 from posixpath import split
@@ -8,6 +9,8 @@ import json
 import shlex
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+
 """from models.base_model import BaseModel"""
 list_class = ["BaseModel"]
 
@@ -52,6 +55,14 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
     def do_destroy(self, args):
+        if len(args) == 0:
+            print("** class name missing **")
+            return
+        new_dicit = args.split(" ")
+        if new_dicit[0] not in list_class:
+            print("** class doesn't exist **")
+            return
+        
             
             
         
