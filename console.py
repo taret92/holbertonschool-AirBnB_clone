@@ -54,14 +54,28 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** no instance found **")
             return
-    def do_destroy(self, args):
+    def do_destroy(self, *args):
+        """Destroy an objects"""
+
         if len(args) == 0:
             print("** class name missing **")
             return
-        new_dicit = args.split(" ")
-        if new_dicit[0] not in list_class:
+        new_list = shlex.split(args)
+        if new_list[0] not in list_class:
             print("** class doesn't exist **")
             return
+        if len(new_list) <= 1:
+            print("** instance id missing **")
+            return
+        new_str = "{}.{}".format(new_list[0], new_list[1])
+        diccionario = storage.all()
+        if new_str in diccionario.keys():
+            diccionario.pop(new_str)
+            storage.save()
+        else:
+            print("** no instance found **")
+    
+        
         
             
             
