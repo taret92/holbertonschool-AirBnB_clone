@@ -6,18 +6,18 @@ from uuid import uuid4
 from datetime import datetime
 from models import storage
 
+
 class BaseModel:
     """
     defines a Basemodel class
     """
 
     def __init__(self, *arg, **kwargs):
-
         """initializes the Basemodel"""
 
         self.id = str(uuid4())
-        self.created_at= datetime.isoformat(datetime.now())
-        self.updated_at= datetime.isoformat(datetime.now())
+        self.created_at = datetime.isoformat(datetime.now())
+        self.updated_at = datetime.isoformat(datetime.now())
         if kwargs:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
@@ -30,8 +30,6 @@ class BaseModel:
             storage.new(self)
             storage.save()
 
-
-
     def __str__(self):
         """returns the print of the basemodel"""
         return (f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
@@ -39,7 +37,7 @@ class BaseModel:
     def __save__(self):
         """uptade with the current time"""
         storage.save()
-        
+
         self.updated_at = datetime.isoformat(datetime.now())
 
     def to_dict(self):
