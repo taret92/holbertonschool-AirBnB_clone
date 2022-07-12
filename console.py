@@ -1,16 +1,9 @@
 #!/usr/bin/env python3
 
 import cmd
-import sys
-import os
-from hashlib import new
-from logging import logMultiprocessing
-from re import template
-from posixpath import split
-from models.engine import storage
-import json
-import shlex
 from models.base_model import BaseModel
+from models import storage
+import json
 from models.user import User
 from models.state import State
 from models.city import City

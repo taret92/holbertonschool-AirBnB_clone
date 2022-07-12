@@ -4,7 +4,7 @@ Class Basemodel that define all common attributes
 """
 from uuid import uuid4
 from datetime import datetime
-from models import storage
+import models
 
 
 class BaseModel:

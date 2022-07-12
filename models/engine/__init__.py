@@ -1,4 +1,6 @@
-# importar el FileStorage
+#!/usr/bin/python3
+"""FileStorage - create FileStorage"""
+
 
 from models.engine.file_storage import FileStorage
 
