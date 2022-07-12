@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
+from ast import arg
 import cmd
 from models.base_model import BaseModel
+import models
 from models import storage
 import json
 from models.user import User
@@ -65,34 +67,35 @@ class HBNBCommand(cmd.Cmd):
             return
 
     def do_destroy(self, args):
-        """Destroy an objects"""
-
+        """Destroy an object"""
+        arg = arg.split()
         if len(args) == 0:
             print("** class name missing **")
-            return
-        new_list = shlex.split(args)
-        if new_list[0] not in list_class:
+        
+        elif arg[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
-            return
-        if len(new_list) <= 1:
+        elif len(arg) == 1:
             print("** instance id missing **")
-            return
-        new_str = "{}.{}".format(new_list[0], new_list[1])
-        diccionario = storage.all()
-        if new_str in diccionario.keys():
-            diccionario.pop(new_str)
-            storage.save()
         else:
-            print("** no instance found **")
+            data = storage.all()
+            save2 = arg[0] + '.' + arg[1]
+            no_instance = False
+            for key in data.copy().keys():
+                if save2 in key:
+                    del data[str(save2)]
+                    storage.save()
+                    no_instance = True
+            if not no_instance:
+                print("** no instance found **")
 
-    def do_all(self, args):
+    def do_all(self, arg):
         """Print all objects"""
-        new_token = args.split()
-        diccionario = storage.all()
-        if len(args) == 0:
+        new_token = arg.split()
+        diccionario = models.storage.all()
+        if len(arg) == 0:
             print("** class name missing **")
             return
-        if not args or new_token[0] in HBNBCommand.classes:
+        if not arg or new_token[0] in HBNBCommand.classes:
             concatenar = []
             for iterador in diccionario.values():
                 concatenar.append(iterador())
@@ -106,7 +109,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
-        splitted_args = shlex.split(args)
+        splitted_args = arg.split()
         if splitted_args[0] not in list_class:
             print("** class doesn't exist **")
             return

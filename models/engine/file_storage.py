@@ -11,7 +11,7 @@ from models.amenity import Amenity
 from models.review import Review
 
 
-class FileStorange:
+class FileStorage:
     """filestorage class"""
     __file_path = "file.json"
     __objects = {} 
