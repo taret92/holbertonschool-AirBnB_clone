@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#convercion de diccionario a json.json
+# convercion de diccionario a json.json
 import json
 import os
 from models.base_model import BaseModel
@@ -10,13 +10,18 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
+
 class FileStorange:
-    
+    """filestorage class"""
     __file_path = "file.json"
+<<<<<<< HEAD
     __objects = {} 
     
     classes = {"BaseModel": BaseModel, "User": User, "Amenity": Amenity,
                "City": City, "Place": Place, "Review": Review, "State": State}
+=======
+    __objects = {}
+>>>>>>> eea4ea42efa7eb9569e3891b8b25c1c99d04e2be
 
     def all(self):
         """returns the dictionary __objects"""
@@ -27,8 +32,9 @@ class FileStorange:
         if obj is not None:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             self.__objects[key] = obj
-    
+
     def save(self):
+<<<<<<< HEAD
         """save - writes an Object to a text file"""
         new_dict = {}
         with open(self.__file_path, 'w') as save:
@@ -36,6 +42,10 @@ class FileStorange:
                 new_dict[key] = value.to_dict()
             json.dump(new_dict, save)
         
+=======
+        pass
+
+>>>>>>> eea4ea42efa7eb9569e3891b8b25c1c99d04e2be
     def reload(self):
         """reload - deserializes the JSON file to __objects"""
         all_obj = {}
