@@ -54,7 +54,7 @@ class HBNBCommand(cmd.Cmd):
         if len(arg) == 0:
             print("** class name missing **")
             return
-        
+
         elif temp_list[0] not in list_class:
             print("** class doesn't exist **")
             return
@@ -71,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
         arg = arg.split()
         if len(args) == 0:
             print("** class name missing **")
-        
+
         elif arg[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         elif len(arg) == 1:
