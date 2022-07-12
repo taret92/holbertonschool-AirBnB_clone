@@ -14,8 +14,8 @@ from models.review import Review
 class FileStorage:
     """filestorage class"""
     __file_path = "file.json"
-    __objects = {} 
-    
+    __objects = {}
+
     classes = {"BaseModel": BaseModel, "User": User, "Amenity": Amenity,
                "City": City, "Place": Place, "Review": Review, "State": State}
 
@@ -36,7 +36,7 @@ class FileStorage:
             for key, value in self.__objects.items():
                 new_dict[key] = value.to_dict()
             json.dump(new_dict, save)
-        
+
     def reload(self):
         """reload - deserializes the JSON file to __objects"""
         all_obj = {}
