@@ -25,10 +25,10 @@ class HBNBCommand(cmd.Cmd):
         "reset if are a emptyline"
         pass
 
-    def do_quit(self, args):
+    def do_quit(self, arg):
         exit()
 
-    def do_EOF(self, args):
+    def do_EOF(self, arg):
         exit()
 
     def help_quit(self):
@@ -37,34 +37,34 @@ class HBNBCommand(cmd.Cmd):
     def help_EOF(self):
         print("end of file")
 
-    def do_create(self, args):
-        if args in list_class:
-            str_class = "{}()".format(args)
+    def do_create(self, arg):
+        if arg in list_class:
+            str_class = "{}()".format(arg)
             new_object = eval(str_class)
             print(new_object.id)
-        elif len(args) == 0:
+        elif len(arg) == 0:
             print("** class name missing **")
         else:
             print("** class doesn't exist **")
 
-    def do_show(self, args):
-        """comentario"""
-        if len(args) == 0:
+    def do_show(self, arg):
+        """comments"""
+        arg = arg.split()
+        temp_list = models.storage.all()
+        if len(arg) == 0:
             print("** class name missing **")
             return
-        temp_list = args.split(" ")
-        if temp_list[0] not in list_class:
+        
+        elif temp_list[0] not in list_class:
             print("** class doesn't exist **")
             return
         if not temp_list[1] or len(temp_list[1]) == 0:
             print("** instance id missing **")
-        str_class_id = "{}.{}".format(temp_list[0], temp_list[1])
-        tmp_objects = storage.all()
-        if str_class_id in tmp_objects.keys():
-            print(tmp_objects[str_class_id])
+        elif f'{arg[0]}.{arg[1]}' in temp_list.keys():
+            print(temp_list[f"{arg[0]}.{arg[1]}"])
+            return
         else:
             print("** no instance found **")
-            return
 
     def do_destroy(self, args):
         """Destroy an object"""
