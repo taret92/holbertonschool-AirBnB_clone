@@ -7,6 +7,7 @@ from datetime import datetime
 import models
 
 
+
 class BaseModel:
     """
     defines a Basemodel class
@@ -27,8 +28,8 @@ class BaseModel:
         else:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
-            storage.save()
+            models.storage.new(self)
+            
 
     def __str__(self):
         """returns the print of the basemodel"""
@@ -36,7 +37,7 @@ class BaseModel:
 
     def __save__(self):
         """uptade with the current time"""
-        storage.save()
+        models.storage.save()
 
         self.updated_at = datetime.isoformat(datetime.now())
 
