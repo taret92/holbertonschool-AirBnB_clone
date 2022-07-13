@@ -15,7 +15,8 @@ from models.review import Review
 
 
 """from models.base_model import BaseModel"""
-list_class = ["BaseModel"]
+list_class = {"BaseModel": BaseModel, "User": User, "Amenity": Amenity,
+              "City": City, "Place": Place, "Review": Review, "State": State}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -43,35 +44,38 @@ class HBNBCommand(cmd.Cmd):
         print("end of file")
 
     def do_create(self, arg):
-        """create a new class"""
-        if arg in list_class:
-            str_class = "{}()".format(arg)
-            new_object = eval(str_class)
-            print(new_object.id)
-        elif len(arg) == 0:
+        """create - create method"""
+        arg = arg.split()
+        if len(arg) == 0:
             print("** class name missing **")
+            return False
+        elif arg[0] in list_class:
+            new_object = list_class[arg[0]]()
         else:
             print("** class doesn't exist **")
+            return
+        print(new_object.id)
+        new_object.save()
 
     def do_show(self, arg):
         """deploy all"""
         arg = arg.split()
-        temp_list = models.storage.all()
+        all_objs = models.storage.all()
         if len(arg) == 0:
             print("** class name missing **")
             return
-
-        elif temp_list[0] not in list_class:
+        elif arg[0] not in list_class:
             print("** class doesn't exist **")
             return
-        if not temp_list[1] or len(temp_list[1]) == 0:
+        elif len(arg) == 1:
             print("** instance id missing **")
-        elif f'{arg[0]}.{arg[1]}' in temp_list.keys():
-            print(temp_list[f"{arg[0]}.{arg[1]}"])
+            return
+        elif f'{arg[0]}.{arg[1]}' in all_objs.keys():
+            print(all_objs[f"{arg[0]}.{arg[1]}"])
             return
         else:
             print("** no instance found **")
-
+            
     def do_destroy(self, args):
         """Destroy an object"""
         arg = arg.split()
@@ -95,24 +99,27 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, arg):
-        """Print all objects"""
-        new_token = arg.split()
-        diccionario = models.storage.all()
-        if len(arg) == 0:
-            print("** class name missing **")
-            return
-        if not arg or new_token[0] in HBNBCommand.classes:
-            concatenar = []
-            for iterador in diccionario.values():
-                concatenar.append(iterador())
-                print(concatenar)
+        """Prints all instances"""
+        all_objs = models.storage.all()
+        instances = []
+        if not arg:
+            for obj in all_objs.values():
+                instances.append(obj.__str__())
+            print(f"{instances}")
         else:
-            print("** class doesn't exist **")
-
-    def do_update(self, args):
+            if arg not in list_class:
+                print("** class doesn't exist **")
+                return
+            else:
+                for obj, value in all_objs.items():
+                    if arg == value.to_dict()["__class__"]:
+                        instances.append(value.__str__())
+        print(instances)
+        
+    def do_update(self, arg):
         """Update an object"""
 
-        if len(args) == 0:
+        if len(arg) == 0:
             print("** class name missing **")
             return
         splitted_args = arg.split()
