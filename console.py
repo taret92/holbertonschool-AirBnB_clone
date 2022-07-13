@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+"""ontains the entry point of the command interpreter"""
 from ast import arg
 import cmd
 from models.base_model import BaseModel
