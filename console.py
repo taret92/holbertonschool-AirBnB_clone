@@ -19,6 +19,7 @@ list_class = ["BaseModel"]
 
 
 class HBNBCommand(cmd.Cmd):
+    """star prompt"""
     prompt = "(hbnb) "
 
     def emptyline(self):
