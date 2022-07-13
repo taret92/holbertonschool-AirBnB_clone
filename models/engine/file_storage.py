@@ -39,8 +39,18 @@ class FileStorage:
 
     def reload(self):
         """reload - deserializes the JSON file to __objects"""
-        all_obj = {}
-        if path.exists(self.__file_path):
-            all_obj = self.read_json()
-        for key, value in all_obj.items():
-            self.__objects[key] = self.classes[value['__class__']](**value)
+        from models.amenity import Amenity
+        from models.base_model import BaseModel
+        from models.city import City
+        from models.place import Place
+        from models.review import Review
+        from models.state import State
+        from models.user import User
+
+        try:
+            with open(self.__file_path, 'r') as f:
+                for key, value in (json.load(f)).items():
+                    value = eval(value['__class__'])(**value)
+                    self.__objects[key] = value
+        except Exception:
+            pass
