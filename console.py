@@ -27,18 +27,23 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_quit(self, arg):
+        """exit to shell"""
         exit()
 
     def do_EOF(self, arg):
+        """exit to file"""
         exit()
 
     def help_quit(self):
+        """info of quit"""
         print("Quit command to exit the program")
 
     def help_EOF(self):
+        """info of EOF"""
         print("end of file")
 
     def do_create(self, arg):
+        """create a new class"""
         if arg in list_class:
             str_class = "{}()".format(arg)
             new_object = eval(str_class)
@@ -49,7 +54,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, arg):
-        """comments"""
+        """deploy all"""
         arg = arg.split()
         temp_list = models.storage.all()
         if len(arg) == 0:
