@@ -33,11 +33,11 @@ class BaseModel:
         """returns the print of the basemodel"""
         return (f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
 
-    def __save__(self):
+    def save(self):
         """uptade with the current time"""
         models.storage.save()
 
-        self.updated_at = datetime.isoformat(datetime.now())
+        self.updated_at = datetime.now()
 
     def to_dict(self):
         """return a dictionary of the basemodel"""
